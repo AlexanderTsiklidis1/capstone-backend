@@ -13,7 +13,7 @@ app.get("/", (req, response) => {
 });
 
 //need to import variable for variable controller 
-//and then use to built endpoint on website
+//and then use to built endpoint on website 
 
 app.get("*", (req, res) => {
     res.status(404).json({ error: "Page not found" });
