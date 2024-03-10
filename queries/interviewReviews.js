@@ -11,3 +11,7 @@ const getReviewByInterview = async (interviewId) => {
 		console.error(error);
 	}
 };
+
+module.exports = {
+	getReviewByInterview,
+};
