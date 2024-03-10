@@ -26,9 +26,13 @@ const getOneInterviewByUser = async (userId, id) => {
 
 const createInterview = async () => {
     try {
-        const { }
 
     } catch (error) {
         console.error(error)
     }
+}
+
+module.exports = {
+    getInterviewsByUser,
+    getOneInterviewByUser
 }
