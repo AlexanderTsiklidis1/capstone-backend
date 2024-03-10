@@ -3,6 +3,7 @@ const interviews = express.Router({ mergeParams: true });
 const {
   getInterviewsByUser,
   getOneInterviewByUser,
+  createInterview,
 } = require("../queries/interviews");
 
 const { getOneUser } = require("../queries/users");
@@ -29,6 +30,17 @@ interviews.get("/:interviewId", async (req, res) => {
     }
   } catch (error) {
     console.error(error);
+  }
+});
+
+app.post("/create", async (req, res) => {
+  const { adminId, intervieweeId } = req.body;
+  try {
+    const newInterview = await createInterview(adminId, intervieweeId);
+    res.json(newInterview);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to create interview" });
   }
 });
 
