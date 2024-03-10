@@ -19,9 +19,9 @@ app.get("/", (req, res) => {
 });
 
 //
-app.get("/get-token", (req, res) => {
-
+app.get("/get-token", async (req, res) => {
   console.log("Token acquired")
+  const fetch = await import("node-fetch");
 
   const jwt = require("jsonwebtoken");
 
@@ -37,8 +37,9 @@ app.get("/get-token", (req, res) => {
 });
 
 //
-app.post("/create", (req, res) => {
+app.post("/create", async (req, res) => {
   const { token, region } = req.body;
+
   const fetch = require("node-fetch");
   const url = `${process.env.VIDEOSDK_API_ENDPOINT}/api/meetings`;
   const options = {
@@ -47,29 +48,43 @@ app.post("/create", (req, res) => {
     body: JSON.stringify({ region }),
   };
 
-  fetch(url, options)
-    .then((response) => response.json())
-    .then((result) => res.json(result)) // result will contain meetingId
-    .catch((error) => console.error("error", error));
+  try {
+    const response = await fetch.default(url, options);
+    const result = await response.json();
+
+    // Extract the meeting ID from the response
+    const { meetingId } = result;
+
+    // Redirect the user to a new page with the meeting ID in the URL
+    res.redirect(`/meeting/${meetingId}`);
+  } catch (error) {
+    console.error("Error creating meeting:", error);
+    res.status(500).json({ error: "Failed to create meeting" });
+  }
 });
 
+
 //
-app.post("/validate-meeting/:meetingId", (req, res) => {
+app.post("/validate-meeting/:meetingId", async (req, res) => {
   const token = req.body.token;
   const meetingId = req.params.meetingId;
 
+
   const fetch = require("node-fetch");
   const url = `${process.env.VIDEOSDK_API_ENDPOINT}/api/meetings/${meetingId}`;
-
   const options = {
     method: "POST",
     headers: { Authorization: token },
   };
 
-  fetch(url, options)
-    .then((response) => response.json())
-    .then((result) => res.json(result)) // result will contain meetingId
-    .catch((error) => console.error("error", error));
+  try {
+    const response = await fetch.default(url, options);
+    const result = await response.json();
+    res.json(result); // result will contain meetingId
+  } catch (error) {
+    console.error("Error validating meeting:", error);
+    res.status(500).json({ error: "Failed to validate meeting" });
+  }
 });
 
 //
