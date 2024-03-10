@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+const jwt = require("jsonwebtoken");
 
 const PORT = 9000;
 const app = express();
@@ -19,22 +20,22 @@ app.get("/", (req, res) => {
 });
 
 //
-app.get("/get-token", async (req, res) => {
-  console.log("Token acquired")
-  const fetch = await import("node-fetch");
+app.get("/get-token", (req, res) => {
+  // Generate authToken using API key and secret key
+  const authToken = generateAuthToken();
 
-  const jwt = require("jsonwebtoken");
+  res.json({ authToken });
+});
 
+const generateAuthToken = () => {
   const options = { expiresIn: "1000m", algorithm: "HS256" };
-
   const payload = {
     apikey: process.env.VIDEOSDK_API_KEY,
     permissions: ["allow_join", "allow_mod"], // also accepts "ask_join"
   };
 
-  const token = jwt.sign(payload, process.env.VIDEOSDK_SECRET_KEY, options);
-  res.json({ token });
-});
+  return jwt.sign(payload, process.env.VIDEOSDK_SECRET_KEY, options);
+};
 
 //
 app.post("/create", async (req, res) => {
@@ -63,12 +64,10 @@ app.post("/create", async (req, res) => {
   }
 });
 
-
 //
 app.post("/validate-meeting/:meetingId", async (req, res) => {
   const token = req.body.token;
   const meetingId = req.params.meetingId;
-
 
   const fetch = require("node-fetch");
   const url = `${process.env.VIDEOSDK_API_ENDPOINT}/api/meetings/${meetingId}`;
