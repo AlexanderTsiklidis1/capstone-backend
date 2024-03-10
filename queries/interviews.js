@@ -24,15 +24,20 @@ const getOneInterviewByUser = async (userId, id) => {
   }
 };
 
-const createInterview = async () => {
-    try {
-
-    } catch (error) {
-        console.error(error)
-    }
-}
+const createInterview = async (adminId, intervieweeId) => {
+  try {
+    const newInterview = await db.one(
+      `INSERT INTO interviews (admin_id, interviewee_id) VALUES ($1, $2) RETURNING *`,
+      [adminId, intervieweeId]
+    );
+    return newInterview;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 module.exports = {
-    getInterviewsByUser,
-    getOneInterviewByUser
-}
+  getInterviewsByUser,
+  getOneInterviewByUser,
+  createInterview,
+};
