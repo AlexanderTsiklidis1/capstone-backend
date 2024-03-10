@@ -24,4 +24,5 @@ const createReview = async (interviewId) => {
 
 module.exports = {
 	getReviewByInterview,
+	createReview,
 };
