@@ -15,14 +15,15 @@ CREATE TABLE interviews (
     id SERIAL PRIMARY KEY,
     grade_id INTEGER REFERENCES interview_grades (id),
     review_id INTEGER REFERENCES interview_reviews (id),
-    interviewer_id INTEGER REFERENCES users (id),
+    admin_id INTEGER REFERENCES users (id),
     interviewee_id INTEGER REFERENCES users (id)
 );
 
 CREATE TABLE interview_grades (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users (id),
-    grade TEXT NOT NULL
+    grade TEXT NOT NULL,
+    comment TEXT
 );
 
 CREATE TABLE interview_reviews (
@@ -42,4 +43,10 @@ CREATE TABLE badges (
     user_id INTEGER REFERENCES users (id),
     badge_title TEXT NOT NULL,
     badge_requirement TEXT NOT NULL
+);
+
+CREATE TABLE user_role (
+    user_id INTEGER REFERENCES users (id),
+    admin BOOLEAN,
+    interviewee BOOLEAN
 );
