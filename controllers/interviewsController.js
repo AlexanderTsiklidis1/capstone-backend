@@ -33,7 +33,7 @@ interviews.get("/:interviewId", async (req, res) => {
   }
 });
 
-app.post("/create", async (req, res) => {
+interviews.post("/", async (req, res) => {
   const { adminId, intervieweeId } = req.body;
   try {
     const newInterview = await createInterview(adminId, intervieweeId);
