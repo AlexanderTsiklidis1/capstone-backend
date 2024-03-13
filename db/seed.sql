@@ -17,4 +17,4 @@ VALUES
 ('Behavioral', 'Problem Solving', 'Tell me about a time when you made a mistake or missed a deadline. What did you do to reorganize yourself in order to complete the project?'),
 ('Behavioral', 'Leadership', 'Tell me about a time that you took the lead on a difficult project.'),
 ('Behavioral', 'Leadership', 'Tell me about a time when you had to go above and beyond the call of duty in order to get a job done. What did that process look like?'),
-('Behavioral', 'Leadership', 'How would you go about motivating a team of people?')
+('Behavioral', 'Leadership', 'How would you go about motivating a team of people?');
