@@ -55,5 +55,7 @@ CREATE TABLE user_role (
 
 CREATE TABLE prompts (
     id SERIAL PRIMARY KEY,
+    interview_type TEXT NOT NULL,
+    category TEXT NOT NULL,
     prompt TEXT NOT NULL
 );
