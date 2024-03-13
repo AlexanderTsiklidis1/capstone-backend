@@ -3,7 +3,7 @@
 INSERT INTO prompts (interview_type, category, prompt)
 VALUES
 ('Behavioral', 'Projects', 'How did you decide to develop this app?'),
-('Behavioral', 'Projets', 'What tech are you using and how did you decide to use it?'),
+('Behavioral', 'Projects', 'What tech are you using and how did you decide to use it?'),
 ('Behavioral', 'Teamwork', 'Have you navigated a difficult situation with a coworker? What steps did you take to solve the problem?'),
 ('Behavioral', 'Teamwork', 'Tell me about a situation where you had to deal with a very frustrated customer or client.'),
 ('Behavioral', 'Teamwork', 'How do you handle conflict?'),
