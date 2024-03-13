@@ -21,14 +21,16 @@ CREATE TABLE interviews (
 
 CREATE TABLE interview_grades (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users (id),
+    interviewee_id INTEGER REFERENCES users (id),
+    admin_id INTEGER REFERENCES users (id),
     grade TEXT NOT NULL,
     comment TEXT
 );
 
 CREATE TABLE interview_reviews (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users (id),
+    admin_id INTEGER REFERENCES users (id),
+    interviewee_id INTEGER REFERENCES users (id),
     review TEXT NOT NULL
 );
 
