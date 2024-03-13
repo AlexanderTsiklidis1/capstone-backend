@@ -16,7 +16,7 @@ notifications.get("/", async (req, res) => {
   }
 });
 
-notifications.get("/notificationId", async (req, res) => {
+notifications.get("/:notificationId", async (req, res) => {
   const { userId, notificationId } = req.params;
   try {
     const oneNotificationByUser = await getOneNotification(
