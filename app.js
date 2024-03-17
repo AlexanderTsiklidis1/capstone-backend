@@ -2,10 +2,13 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 
+const promptsController = require("./controllers/promptsController");
 
 
 app.use(cors());
 app.use(express.json());
+
+app.use("/prompts", promptsController)
 
 
 app.get("/", (req, response) => {
