@@ -59,3 +59,29 @@ CREATE TABLE prompts (
     category TEXT NOT NULL,
     prompt TEXT NOT NULL
 );
+
+CREATE TABLE bookings (
+    user_id INTEGER REFERENCES users (id),
+    id SERIAL PRIMARY KEY,
+    admin_id INTEGER REFERENCES users (id),
+    date DATE,
+    admin_confirmed BOOLEAN,
+    video_meeting_id TEXT NOT NULL,
+    expiration_time INTEGER
+);
+
+CREATE TABLE user_bookings (
+    user_id INTEGER REFERENCES users (id),
+    availabile_times_id INTEGER REFERENCES available_times (id),
+    bookings_id INTEGER REFERENCES bookings (id),
+    admin_id INTEGER REFERENCES users (id),
+    id SERIAL PRIMARY KEY
+);
+
+CREATE TABLE available_times (
+    id SERIAL PRIMARY KEY,
+    admin_id INTEGER REFERENCES users (id),
+    start_time TIME,
+    end_time TIME,
+    date DATE
+);
