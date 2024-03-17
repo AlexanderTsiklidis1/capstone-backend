@@ -8,7 +8,10 @@ const jwt = require("jsonwebtoken");
 const PORT = 9000;
 const app = express();
 
-console.log(process.env.VIDEOSDK_API_KEY, process.env.VIDEOSDK_SECRET_KEY);
+const promptsController = require("./controllers/promptsController");
+app.use("/prompts", promptsController)
+
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
