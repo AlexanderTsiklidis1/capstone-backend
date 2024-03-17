@@ -11,13 +11,6 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE interviews (
-    id SERIAL PRIMARY KEY,
-    grade_id INTEGER REFERENCES interview_grades (id),
-    review_id INTEGER REFERENCES interview_reviews (id),
-    admin_id INTEGER REFERENCES users (id),
-    interviewee_id INTEGER REFERENCES users (id)
-);
 
 CREATE TABLE interview_grades (
     id SERIAL PRIMARY KEY,
@@ -32,6 +25,14 @@ CREATE TABLE interview_reviews (
     admin_id INTEGER REFERENCES users (id),
     interviewee_id INTEGER REFERENCES users (id),
     review TEXT NOT NULL
+);
+
+CREATE TABLE interviews (
+    id SERIAL PRIMARY KEY,
+    grade_id INTEGER REFERENCES interview_grades (id),
+    review_id INTEGER REFERENCES interview_reviews (id),
+    admin_id INTEGER REFERENCES users (id),
+    interviewee_id INTEGER REFERENCES users (id)
 );
 
 CREATE TABLE notifications (
@@ -70,18 +71,18 @@ CREATE TABLE bookings (
     expiration_time INTEGER
 );
 
-CREATE TABLE user_bookings (
-    user_id INTEGER REFERENCES users (id),
-    availabile_times_id INTEGER REFERENCES available_times (id),
-    bookings_id INTEGER REFERENCES bookings (id),
-    admin_id INTEGER REFERENCES users (id),
-    id SERIAL PRIMARY KEY
-);
-
 CREATE TABLE available_times (
     id SERIAL PRIMARY KEY,
     admin_id INTEGER REFERENCES users (id),
     start_time TIME,
     end_time TIME,
     date DATE
+);
+
+CREATE TABLE user_bookings (
+    user_id INTEGER REFERENCES users (id),
+    available_times_id INTEGER REFERENCES available_times (id),
+    bookings_id INTEGER REFERENCES bookings (id),
+    admin_id INTEGER REFERENCES users (id),
+    id SERIAL PRIMARY KEY
 );
