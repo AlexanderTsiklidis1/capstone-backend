@@ -35,4 +35,6 @@ bookings.get('/:bookingId', async (req, res) => {
 	}
 });
 
+
+
 module.exports = bookings;

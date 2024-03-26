@@ -5,17 +5,23 @@ const cors = require("cors");
 const morgan = require("morgan");
 const jwt = require("jsonwebtoken");
 
+
 const PORT = 9000;
 const app = express();
-
-const promptsController = require("./controllers/promptsController");
-app.use("/prompts", promptsController)
-
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
+
+
+const promptsController = require("./controllers/promptsController");
+app.use("/prompts", promptsController)
+
+
+const zoomAuthEndpoint = require("./controllers/zoomAuthEndpointController")
+app.use('/zoom-signature', zoomAuthEndpoint);
+
 
 //
 app.get("/", (req, res) => {
@@ -92,4 +98,9 @@ app.post("/validate-meeting/:meetingId", async (req, res) => {
 //
 app.listen(PORT, () => {
   console.log(`API server listening at http://localhost:${PORT}`);
+});
+
+
+app.post('/zoom-signature', (req, res) => {
+
 });
