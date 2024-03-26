@@ -5,6 +5,9 @@ const app = express();
 const promptsController = require("./controllers/promptsController");
 app.use("/prompts", promptsController)
 
+const zoomAuthEndpoint = require("./controllers/zoomAuthEndpointController")
+app.use('/zoom-signature', zoomAuthEndpoint);
+
 
 app.use(cors());
 app.use(express.json());
