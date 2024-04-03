@@ -86,3 +86,33 @@ CREATE TABLE user_bookings (
     admin_id INTEGER REFERENCES users (id),
     id SERIAL PRIMARY KEY
 );
+
+CREATE TABLE grades (
+    id SERIAL PRIMARY KEY,
+    interviewee_id INTEGER REFERENCES users (id),
+    admin_id INTEGER REFERENCES users (id),
+    prompt_1_id INTEGER REFERENCES prompts (id),
+    prompt_1_grade INTEGER NOT NULL,
+    prompt_1_notes TEXT,
+    prompt_2_id INTEGER REFERENCES prompts (id),
+    prompt_2_grade INTEGER NOT NULL,
+    prompt_2_notes TEXT,
+    prompt_3_id INTEGER REFERENCES prompts (id),
+    prompt_3_grade INTEGER NOT NULL,
+    prompt_3_notes TEXT,
+    prompt_4_id INTEGER REFERENCES prompts (id),
+    prompt_4_grade INTEGER NOT NULL,
+    prompt_4_notes TEXT,
+    prompt_5_id INTEGER REFERENCES prompts (id),
+    prompt_5_grade INTEGER NOT NULL,
+    prompt_5_notes TEXT,
+    prompt_6_id INTEGER REFERENCES prompts (id),
+    prompt_6_grade INTEGER NOT NULL,
+    prompt_6_notes TEXT,
+    prompt_7_id INTEGER REFERENCES prompts (id),
+    prompt_7_grade INTEGER NOT NULL,
+    prompt_7_notes TEXT,
+    prompt_8_id INTEGER REFERENCES prompts (id),
+    prompt_8_grade INTEGER NOT NULL,
+    prompt_8_notes TEXT,
+);
