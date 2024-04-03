@@ -4,6 +4,8 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const jwt = require("jsonwebtoken");
+const bodyParser = require('body-parser');
+const { handleCalendlyWebhook } = require('./controllers/calendlyWebhookController');
 
 
 const PORT = 9000;
@@ -13,6 +15,13 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
+app.use(bodyParser.json());
+
+
+
+app.post('/', (req,res) => {
+  console.log(req.body.payload)
+});
 
 
 const promptsController = require("./controllers/promptsController");
@@ -92,6 +101,17 @@ app.post("/validate-meeting/:meetingId", async (req, res) => {
   } catch (error) {
     console.error("Error validating meeting:", error);
     res.status(500).json({ error: "Failed to validate meeting" });
+  }
+});
+
+app.get('/events/:calendlyEventId', async (req, res) => {
+  const { calendlyEventId } = req.params;
+  try {
+      const interviewDetails = await db.one('SELECT * FROM events WHERE calendly_event_id = $1', calendlyEventId);
+      res.json(interviewDetails);
+  } catch (error) {
+      console.error('Error fetching interview details:', error);
+      res.status(404).send('Interview not found');
   }
 });
 
