@@ -32,7 +32,8 @@ CREATE TABLE interviews (
     grade_id INTEGER REFERENCES interview_grades (id),
     review_id INTEGER REFERENCES interview_reviews (id),
     admin_id INTEGER REFERENCES users (id),
-    interviewee_id INTEGER REFERENCES users (id)
+    interviewee_id INTEGER REFERENCES users (id),
+    date DATE
 );
 
 CREATE TABLE notifications (
@@ -56,7 +57,6 @@ CREATE TABLE user_role (
 
 CREATE TABLE prompts (
     id SERIAL PRIMARY KEY,
-    interview_type TEXT NOT NULL,
     category TEXT NOT NULL,
     prompt TEXT NOT NULL
 );
@@ -115,4 +115,5 @@ CREATE TABLE grades (
     prompt_8_id INTEGER REFERENCES prompts (id),
     prompt_8_grade INTEGER NOT NULL,
     prompt_8_notes TEXT,
+    total_grade INTEGER NOT NULL
 );
