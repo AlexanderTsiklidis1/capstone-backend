@@ -11,6 +11,16 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE events (
+    id SERIAL PRIMARY KEY,
+    calendly_event_id VARCHAR(255) NOT NULL,
+    invitee_email VARCHAR(255) NOT NULL,
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL,
+    zoom_link TEXT,
+    UNIQUE(calendly_event_id)
+);
+
 
 CREATE TABLE interview_grades (
     id SERIAL PRIMARY KEY,
