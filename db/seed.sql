@@ -2,7 +2,7 @@
 
 INSERT INTO prompts (category, prompt)
 VALUES
-('Pop Pitch' 'Tell me about yourself.'),
+('Pop Pitch', 'Tell me about yourself.'),
 ('Research', 'Why do you want to work at this company?'),
 ('Projects', 'How did you decide to develop this app?'),
 ('Projects', 'What tech are you using and how did you decide to use it?'),
