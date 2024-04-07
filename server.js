@@ -9,7 +9,12 @@ const jwt = require("jsonwebtoken");
 const PORT = 9000;
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: 'https://aceitapp.netlify.app',
+  optionsSuccessStatus: 200 
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
