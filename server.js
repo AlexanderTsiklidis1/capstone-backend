@@ -9,7 +9,7 @@ const { handleCalendlyWebhook } = require('./controllers/calendlyWebhookControll
 
 
 const PORT = 9000;
-const app = express();
+const app = require("./app.js");
 
 app.use(cors());
 app.use(express.json());
