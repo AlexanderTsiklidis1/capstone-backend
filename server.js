@@ -11,7 +11,12 @@ const { handleCalendlyWebhook } = require('./controllers/calendlyWebhookControll
 const PORT = 9000;
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200 
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));

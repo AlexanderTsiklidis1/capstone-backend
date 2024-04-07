@@ -99,6 +99,7 @@ CREATE TABLE user_bookings (
 
 CREATE TABLE grades (
     id SERIAL PRIMARY KEY,
+    interview_id INTEGER REFERENCES interviews (id),
     interviewee_id INTEGER REFERENCES users (id),
     admin_id INTEGER REFERENCES users (id),
     prompt_1_id INTEGER REFERENCES prompts (id),
