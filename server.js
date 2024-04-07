@@ -122,5 +122,5 @@ app.listen(PORT, () => {
 
 
 app.post('/zoom-signature', (req, res) => {
-
+  console.log(res)
 });
