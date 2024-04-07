@@ -12,7 +12,7 @@ const PORT = 9000;
 const app = express();
 
 const corsOptions = {
-  origin: 'https://aceitapp.netlify.app',
+  origin: '*',
   optionsSuccessStatus: 200 
 };
 
