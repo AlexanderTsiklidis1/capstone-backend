@@ -1,20 +1,18 @@
-const db = require("../db/dbConfig");
+const db = require("../db/dbConfig.js");
 
-const getEventDetails = async (calendlyEventId) => {
-    try {
-      const eventDetails = await db.one(
-        "SELECT * FROM interviews WHERE calendly_event_id = $1",
-        calendlyEventId
-      );
-      return eventDetails;
-    } catch (error) {
-      console.error('Error fetching interview details:', error);
-      // Depending on your error handling strategy, you might throw the error, return null, or handle it differently
-      throw error;
-    }
-  };
+const saveEvent = async (event) => {
+  const { zoomMeetingId, zoomPassword, ...otherEventDetails } = event;
+  try {
+    const result = await db.one(
+      "INSERT INTO events (zoom_meeting_id, zoom_password, other_event_details) VALUES ($1, $2, $3) RETURNING *",
+      [zoomMeetingId, zoomPassword, JSON.stringify(otherEventDetails)]
+    );
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-  module.exports = {
-    getEventDetails,
-    
-  };
+module.exports = {
+  saveEvent,
+};
