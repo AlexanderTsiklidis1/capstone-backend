@@ -5,7 +5,8 @@ const cors = require("cors");
 const morgan = require("morgan");
 const jwt = require("jsonwebtoken");
 const bodyParser = require('body-parser');
-const { handleCalendlyWebhook } = require('./controllers/calendlyWebhookController');
+
+
 
 
 const PORT = 9000;
@@ -23,10 +24,12 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 
 
-
 app.post('/', (req,res) => {
   console.log(req.body.payload)
 });
+
+const calendlyWebhookController = require("./controllers/calendlyWebhookController");
+app.post("/calendly-webhook", calendlyWebhookController);
 
 
 const promptsController = require("./controllers/promptsController");

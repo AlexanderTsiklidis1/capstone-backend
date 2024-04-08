@@ -1,20 +1,28 @@
-const { getEventDetails } = require('../queries/calendly');
+const express = require("express");
+const { saveEvent } = require("../queries/calendly");
+const calendlyWebhook = express.Router();
 
-exports.handleCalendlyWebhook = async (req, res) => {
-    const { event, payload } = req.body;
+calendlyWebhook.post("/", async (req, res) => {
+  const data = req.body;
+  console.log(data,"$$$$$$$$$$$$$$")
+  const joinUrl = data.scheduled_event.location.join_url;
+  const zoomMeetingId = joinUrl.split('/j/')[1].split('?')[0];
+  const zoomPassword = new URLSearchParams(joinUrl.split('?')[1]).get('pwd');
 
-    if (event === 'invitee.created') {
-        const zoomLink = payload.event.location; 
-        const eventDetails = {
-            calendly_event_id: payload.event.uuid,
-            invitee_email: payload.invitee.email,
-            start_time: payload.event.start_time,
-            end_time: payload.event.end_time,
-            zoom_link: zoomLink,
-        };
+  const eventDetails = {
+    zoomMeetingId,
+    zoomPassword,
+    ...data // Include other data as needed
+  };
 
-        await getEventDetails(eventDetails);
-    }
+  try {
+    const savedEvent = await saveEvent(eventDetails);
+    console.log(savedEvent,"$$$$$$$$$$$$$$")
+    res.status(201).json(savedEvent);
+  } catch (error) {
+    console.error("Error saving Calendly event:", error);
+    res.status(500).json({ error: "Failed to save Calendly event" });
+  }
+});
 
-    res.status(200).send('Received');
-};
+module.exports = calendlyWebhook;
