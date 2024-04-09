@@ -24,9 +24,7 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 
 
-app.post('/', (req,res) => {
-  console.log(req.body.payload)
-});
+
 
 const calendlyWebhookController = require("./controllers/calendlyWebhookController");
 app.post("/calendly-webhook", calendlyWebhookController);
