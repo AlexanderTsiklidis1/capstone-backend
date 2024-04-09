@@ -4,15 +4,27 @@ const calendlyWebhook = express.Router();
 
 calendlyWebhook.post("/", async (req, res) => {
   const data = req.body;
+  if(data.payload.scheduled_event?.location?.data) {
   console.log(data,"$$$$$$$$$$$$$$")
-  const joinUrl = data.scheduled_event.location.join_url;
-  const zoomMeetingId = joinUrl.split('/j/')[1].split('?')[0];
-  const zoomPassword = new URLSearchParams(joinUrl.split('?')[1]).get('pwd');
+  //if we have data, we want to save the data! so if we dont have data, do nothing!
+  res.send(data)
+}
+  const { id , password } = data.payload.scheduled_event.location.data
+  const {email, name} = data.payload
+  const {user_email, user_name} = data.payload.scheduled_event.event_memberships[0];
+  const start_time = data.payload.scheduled_event.start_time
+ 
+  
+  
 
   const eventDetails = {
-    zoomMeetingId,
-    zoomPassword,
-    ...data // Include other data as needed
+    id,
+    password,
+    email,
+    name,
+    user_email,
+    user_name,
+    start_time
   };
 
   try {

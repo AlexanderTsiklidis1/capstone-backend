@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 
 
 const calendlyWebhookController = require("./controllers/calendlyWebhookController");
-app.use("/calendly-webhook", calendlyWebhookController);
+app.use("/", calendlyWebhookController);
 
 
 const promptsController = require("./controllers/promptsController");
