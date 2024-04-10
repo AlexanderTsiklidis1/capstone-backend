@@ -4,18 +4,21 @@ const calendlyWebhook = express.Router();
 
 calendlyWebhook.post("/", async (req, res) => {
   const data = req.body;
-  if(data.payload.scheduled_event?.location?.data) {
-  console.log(data,"$$$$$$$$$$$$$$")
-  //if we have data, we want to save the data! so if we dont have data, do nothing!
-  res.send(data)
-}
-  const { id , password } = data.payload.scheduled_event.location.data
-  const {email, name} = data.payload
-  const {user_email, user_name} = data.payload.scheduled_event.event_memberships[0];
-  const start_time = data.payload.scheduled_event.start_time
- 
-  
-  
+  const date = new Date
+  console.log(`calendly webhook was hit now ${date}`)
+
+  // Check if the necessary data is present
+  if (!data.payload || !data.payload.scheduled_event || !data.payload.scheduled_event.location?.data) {
+    // If the necessary data is not present, log and return immediately
+    console.error("Missing data in payload");
+    return res.status(400).json({ error: "Missing data in payload" });
+  }
+
+  const { id, password } = data.payload.scheduled_event.location.data;
+  const { email, name } = data.payload || {}; // Assuming invitee details are directly under payload
+  const user_email = data.payload.scheduled_event.event_memberships[0]?.user_email;
+  const user_name = data.payload.scheduled_event.event_memberships[0]?.user_name;
+  const start_time = data.payload.scheduled_event.start_time;
 
   const eventDetails = {
     id,
@@ -29,11 +32,11 @@ calendlyWebhook.post("/", async (req, res) => {
 
   try {
     const savedEvent = await saveEvent(eventDetails);
-    console.log(savedEvent,"$$$$$$$$$$$$$$")
-    res.status(201).json(savedEvent);
+    console.log("Event saved successfully:", savedEvent);
+    return res.status(201).json(savedEvent);
   } catch (error) {
     console.error("Error saving Calendly event:", error);
-    res.status(500).json({ error: "Failed to save Calendly event" });
+    return res.status(500).json({ error: "Failed to save Calendly event" });
   }
 });
 

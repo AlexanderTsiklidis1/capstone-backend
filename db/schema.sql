@@ -17,8 +17,8 @@ CREATE TABLE events (
     password VARCHAR(255) NOT NULL,
     invitee_email VARCHAR(255) NOT NULL,
     invitee_name TEXT NOT NULL,
-    inviter_name TEXT NOT NULL,
     inviter_email VARCHAR(255) NOT NULL,
+    inviter_name TEXT NOT NULL,
     start_time TIMESTAMP NOT NULL,
     UNIQUE(meeting_Id)
 );
