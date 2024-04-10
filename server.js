@@ -23,6 +23,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 
+const interviewsController = require("./controllers/interviewsController");
+app.use("/interviews", interviewsController)
+
 
 
 
