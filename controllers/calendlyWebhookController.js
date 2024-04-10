@@ -1,20 +1,43 @@
-const { getEventDetails } = require('../queries/calendly');
+const express = require("express");
+const { saveEvent } = require("../queries/calendly");
+const calendlyWebhook = express.Router();
 
-exports.handleCalendlyWebhook = async (req, res) => {
-    const { event, payload } = req.body;
+calendlyWebhook.post("/", async (req, res) => {
+  const data = req.body;
+  const date = new Date
+  console.log(`calendly webhook was hit now ${date}`)
 
-    if (event === 'invitee.created') {
-        const zoomLink = payload.event.location; 
-        const eventDetails = {
-            calendly_event_id: payload.event.uuid,
-            invitee_email: payload.invitee.email,
-            start_time: payload.event.start_time,
-            end_time: payload.event.end_time,
-            zoom_link: zoomLink,
-        };
+  // Check if the necessary data is present
+  if (!data.payload || !data.payload.scheduled_event || !data.payload.scheduled_event.location?.data) {
+    // If the necessary data is not present, log and return immediately
+    console.error("Missing data in payload");
+    return res.status(400).json({ error: "Missing data in payload" });
+  }
 
-        await getEventDetails(eventDetails);
-    }
+  const { id, password } = data.payload.scheduled_event.location.data;
+  const { email, name } = data.payload || {}; // Assuming invitee details are directly under payload
+  const user_email = data.payload.scheduled_event.event_memberships[0]?.user_email;
+  const user_name = data.payload.scheduled_event.event_memberships[0]?.user_name;
+  const start_time = data.payload.scheduled_event.start_time;
 
-    res.status(200).send('Received');
-};
+  const eventDetails = {
+    id,
+    password,
+    email,
+    name,
+    user_email,
+    user_name,
+    start_time
+  };
+
+  try {
+    const savedEvent = await saveEvent(eventDetails);
+    console.log("Event saved successfully:", savedEvent);
+    return res.status(201).json(savedEvent);
+  } catch (error) {
+    console.error("Error saving Calendly event:", error);
+    return res.status(500).json({ error: "Failed to save Calendly event" });
+  }
+});
+
+module.exports = calendlyWebhook;
