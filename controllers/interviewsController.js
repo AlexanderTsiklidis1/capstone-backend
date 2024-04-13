@@ -14,6 +14,7 @@ interviews.post("/", async (req, res) => {
   console.log("$$$$$$$$$$$$$",email, "$$$$$$$$$$$$$$$$")
   try {
     const interviewsByUser = await getInterviewsByUserEmail(email);
+    console.log(interviewsByUser)
     res.json(interviewsByUser);
   } catch (error) {
     res.json(error);
