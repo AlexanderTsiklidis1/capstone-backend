@@ -14,7 +14,7 @@ CREATE TABLE users (
 CREATE TABLE events (
     id SERIAL PRIMARY KEY,
     meeting_Id VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
+    password VARCHAR(255),
     invitee_email VARCHAR(255) NOT NULL,
     invitee_name TEXT NOT NULL,
     inviter_email VARCHAR(255) NOT NULL,

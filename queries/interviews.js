@@ -13,6 +13,15 @@ const getInterviewsByUserEmail = async (userEmail) => {
   }
 };
 
+const getAllInterviews = async () => {
+  try {
+    const interviews = await db.any("SELECT * FROM events");
+    return interviews
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 // const getOneInterviewByUser = async (userId, id) => {
 //   try {
 //     const interview = await db.one(
@@ -41,4 +50,5 @@ module.exports = {
   getInterviewsByUserEmail,
   // getOneInterviewByUser,
   // createInterview,
+  getAllInterviews
 };

@@ -4,6 +4,7 @@ const {
   getInterviewsByUserEmail,
   // getOneInterviewByUser,
   // createInterview,
+  getAllInterviews
 } = require("../queries/interviews");
 
 // const { getOneUser } = require("../queries/users");
@@ -17,9 +18,19 @@ interviews.post("/", async (req, res) => {
     console.log(interviewsByUser)
     res.json(interviewsByUser);
   } catch (error) {
+    console.log(error)
     res.json(error);
   }
 });
+
+interviews.get("/", async (req, res) => {
+  try {
+    const interviews = await getAllInterviews()
+    res.json(interviews)
+  } catch (error) {
+    res.json(error)
+  }
+})
 
 // interviews.get("/:interviewId", async (req, res) => {
 //   const { userId, interviewId } = req.params;

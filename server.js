@@ -26,8 +26,8 @@ app.use(bodyParser.json());
 const interviewsController = require("./controllers/interviewsController");
 app.use("/interviews", interviewsController)
 
-
-
+const feedbackController = require("./controllers/feedbackController")
+app.use("/feedback", feedbackController)
 
 const calendlyWebhookController = require("./controllers/calendlyWebhookController");
 app.use("/", calendlyWebhookController);

@@ -106,4 +106,5 @@ const addGrade = async (gradeData) => {
 
 module.exports = {
   getGradesByInterviewee,
+  addGrade
 };
