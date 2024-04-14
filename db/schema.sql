@@ -14,7 +14,7 @@ CREATE TABLE users (
 CREATE TABLE events (
     id SERIAL PRIMARY KEY,
     meeting_Id VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
+    password VARCHAR(255),
     invitee_email VARCHAR(255) NOT NULL,
     invitee_name TEXT NOT NULL,
     inviter_email VARCHAR(255) NOT NULL,
@@ -102,8 +102,8 @@ CREATE TABLE user_bookings (
 CREATE TABLE grades (
     id SERIAL PRIMARY KEY,
     interview_id INTEGER REFERENCES interviews (id),
-    interviewee_id INTEGER REFERENCES users (id),
-    admin_id INTEGER REFERENCES users (id),
+    interviewee_name TEXT NOT NULL,
+    admin_name TEXT NOT NULL,
     prompt_1_id INTEGER REFERENCES prompts (id),
     prompt_1_grade INTEGER NOT NULL,
     prompt_1_notes TEXT,
