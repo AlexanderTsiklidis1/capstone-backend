@@ -128,5 +128,5 @@ CREATE TABLE grades (
     prompt_8_id INTEGER REFERENCES prompts (id),
     prompt_8_grade INTEGER NOT NULL,
     prompt_8_notes TEXT,
-    total_grade INTEGER NOT NULL
+    total_grade INTEGER
 );

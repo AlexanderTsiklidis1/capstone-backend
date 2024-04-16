@@ -5,6 +5,7 @@ const { getAllPrompts, getOnePrompt } = require("../queries/prompts");
 prompts.get("/", async (req, res) => {
   try {
     const allPrompts = await getAllPrompts();
+    console.log("this is prompts$$$$$$$$")
     res.json(allPrompts);
   } catch (error) {
     res.json(error);

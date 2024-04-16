@@ -29,8 +29,6 @@ app.use("/interviews", interviewsController)
 const feedbackController = require("./controllers/feedbackController")
 app.use("/feedback", feedbackController)
 
-const calendlyWebhookController = require("./controllers/calendlyWebhookController");
-app.use("/", calendlyWebhookController);
 
 
 const promptsController = require("./controllers/promptsController");
@@ -41,6 +39,8 @@ const zoomAuthEndpoint = require("./controllers/zoomAuthEndpointController")
 app.use('/zoom-signature', zoomAuthEndpoint);
 
 
+const calendlyWebhookController = require("./controllers/calendlyWebhookController");
+app.use("/", calendlyWebhookController);
 //
 app.get("/", (req, res) => {
   res.send("Hello World!");

@@ -1,17 +1,19 @@
 const db = require("../db/dbConfig");
 
-const getInterviewsByUserEmail = async (userEmail) => {
+const getInterviewsByUserEmail = async (email) => {
   try {
-    console.log("***********", userEmail, "************")
-    const interviews = await db.any(
-      "SELECT * FROM events WHERE invitee_email = $1",
-      userEmail
+    console.log("Querying events for email:", email);
+    const events = await db.any(
+      "SELECT * FROM events WHERE invitee_email = $1 OR inviter_email = $1",
+      [email]
     );
-    return interviews;
+    return events;
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching events:", error);
+    return []; // Return empty array in case of error for consistent function output
   }
 };
+
 
 const getAllInterviews = async () => {
   try {
