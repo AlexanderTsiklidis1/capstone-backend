@@ -41,11 +41,11 @@ const addGrade = async (gradeData) => {
       prompt_8_id,
       prompt_8_grade,
       prompt_8_notes,
-      total_grade,
+      total_grade
     } = gradeData;
     const grade = await db.one(
       `INSERT INTO grades (
-        interview_id, interviewee_id, admin_id, 
+        interview_id, interviewee_name, admin_name,
         prompt_1_id, prompt_1_grade, prompt_1_notes,
         prompt_2_id, prompt_2_grade, prompt_2_notes,
         prompt_3_id, prompt_3_grade, prompt_3_notes,
@@ -65,8 +65,7 @@ const addGrade = async (gradeData) => {
         $19, $20, $21,
         $22, $23, $24,
         $25, $26, $27,
-        $28, $29, $30,
-        $31
+        $28
       ) RETURNING *`,
       [
         interviewee_name,
@@ -95,7 +94,7 @@ const addGrade = async (gradeData) => {
         prompt_8_id,
         prompt_8_grade,
         prompt_8_notes,
-        total_grade,
+        total_grade
       ]
     );
     return grade;

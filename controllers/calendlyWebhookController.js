@@ -17,7 +17,7 @@ calendlyWebhook.post("/", async (req, res) => {
   const { id, password } = data.payload.scheduled_event.location.data;
   const { email, name } = data.payload || {}; // Assuming invitee details are directly under payload
   const user_email = data.payload.scheduled_event.event_memberships[0]?.user_email;
-  const user_name = data.payload.scheduled_event.event_memberships[0]?.user_name;
+  const user_name = data.payload.scheduled_event.name
   const start_time = data.payload.scheduled_event.start_time;
 
   const eventDetails = {

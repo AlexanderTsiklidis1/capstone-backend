@@ -1,26 +1,27 @@
 const db = require("../db/dbConfig");
 
-const getInterviewsByUserEmail = async (userEmail) => {
+const getInterviewsByUserId = async (userId) => {
   try {
-    console.log("***********", userEmail, "************")
-    const interviews = await db.any(
-      "SELECT * FROM events WHERE invitee_email = $1",
-      userEmail
+    const events = await db.any(
+      "SELECT * FROM events WHERE invitee_id = $1 OR inviter_id = $1",
+      [userId]
     );
-    return interviews;
+    return events;
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching events by user ID:', error);
+    throw error;
   }
 };
 
 const getAllInterviews = async () => {
   try {
-    const interviews = await db.any("SELECT * FROM events");
-    return interviews
+    const events = await db.any("SELECT * FROM events");
+    return events;
   } catch (error) {
-    console.error(error)
+    console.error('Error fetching all events:', error);
+    throw error;
   }
-}
+};
 
 // const getOneInterviewByUser = async (userId, id) => {
 //   try {
@@ -47,8 +48,6 @@ const getAllInterviews = async () => {
 // };
 
 module.exports = {
-  getInterviewsByUserEmail,
-  // getOneInterviewByUser,
-  // createInterview,
+  getInterviewsByUserId,
   getAllInterviews
 };

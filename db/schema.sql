@@ -5,48 +5,31 @@ CREATE DATABASE capstone_interviews_dev;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    first_name TEXT NOT NULL,
-    last_name TEXT NOT NULL,
+    uid VARCHAR(255) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
+    display_name TEXT NOT NULL,
+    role TEXT,
+    photo_url TEXT
 );
 
 CREATE TABLE events (
     id SERIAL PRIMARY KEY,
-    meeting_Id VARCHAR(255) NOT NULL,
+    meeting_id VARCHAR(255) NOT NULL,
     password VARCHAR(255),
-    invitee_email VARCHAR(255) NOT NULL,
-    invitee_name TEXT NOT NULL,
-    inviter_email VARCHAR(255) NOT NULL,
-    inviter_name TEXT NOT NULL,
+    invitee_id INTEGER REFERENCES users (id),
+    inviter_id INTEGER REFERENCES users (id),
     start_time TIMESTAMP NOT NULL,
-    UNIQUE(meeting_Id)
+    UNIQUE(meeting_id)
 );
 
-
-CREATE TABLE interview_grades (
-    id SERIAL PRIMARY KEY,
-    interviewee_id INTEGER REFERENCES users (id),
-    admin_id INTEGER REFERENCES users (id),
-    grade TEXT NOT NULL,
-    comment TEXT
-);
-
-CREATE TABLE interview_reviews (
-    id SERIAL PRIMARY KEY,
-    admin_id INTEGER REFERENCES users (id),
-    interviewee_id INTEGER REFERENCES users (id),
-    review TEXT NOT NULL
-);
-
-CREATE TABLE interviews (
-    id SERIAL PRIMARY KEY,
-    grade_id INTEGER REFERENCES interview_grades (id),
-    review_id INTEGER REFERENCES interview_reviews (id),
-    admin_id INTEGER REFERENCES users (id),
-    interviewee_id INTEGER REFERENCES users (id),
-    date DATE
-);
+-- CREATE TABLE interviews (
+--     id SERIAL PRIMARY KEY,
+--     grade_id INTEGER REFERENCES interview_grades (id),
+--     review_id INTEGER REFERENCES interview_reviews (id),
+--     admin_id INTEGER REFERENCES users (id),
+--     interviewee_id INTEGER REFERENCES users (id),
+--     date DATE
+-- );
 
 CREATE TABLE notifications (
     id SERIAL PRIMARY KEY,
@@ -61,11 +44,6 @@ CREATE TABLE badges (
     badge_requirement TEXT NOT NULL
 );
 
-CREATE TABLE user_role (
-    user_id INTEGER REFERENCES users (id),
-    admin BOOLEAN,
-    interviewee BOOLEAN
-);
 
 CREATE TABLE prompts (
     id SERIAL PRIMARY KEY,
@@ -73,37 +51,19 @@ CREATE TABLE prompts (
     prompt TEXT NOT NULL
 );
 
-CREATE TABLE bookings (
-    user_id INTEGER REFERENCES users (id),
-    id SERIAL PRIMARY KEY,
-    admin_id INTEGER REFERENCES users (id),
-    date DATE,
-    admin_confirmed BOOLEAN,
-    video_meeting_id TEXT NOT NULL,
-    expiration_time INTEGER
-);
-
-CREATE TABLE available_times (
-    id SERIAL PRIMARY KEY,
-    admin_id INTEGER REFERENCES users (id),
-    start_time TIME,
-    end_time TIME,
-    date DATE
-);
-
-CREATE TABLE user_bookings (
-    user_id INTEGER REFERENCES users (id),
-    available_times_id INTEGER REFERENCES available_times (id),
-    bookings_id INTEGER REFERENCES bookings (id),
-    admin_id INTEGER REFERENCES users (id),
-    id SERIAL PRIMARY KEY
-);
+-- CREATE TABLE user_bookings (
+--     user_id INTEGER REFERENCES users (id),
+--     available_times_id INTEGER REFERENCES available_times (id),
+--     bookings_id INTEGER REFERENCES bookings (id),
+--     admin_id INTEGER REFERENCES users (id),
+--     id SERIAL PRIMARY KEY
+-- );
 
 CREATE TABLE grades (
     id SERIAL PRIMARY KEY,
-    interview_id INTEGER REFERENCES interviews (id),
-    interviewee_name TEXT NOT NULL,
-    admin_name TEXT NOT NULL,
+    events_id INTEGER REFERENCES events (id),
+    invitee_id INTEGER REFERENCES users (id),
+    inviter_id INTEGER REFERENCES users (id),
     prompt_1_id INTEGER REFERENCES prompts (id),
     prompt_1_grade INTEGER NOT NULL,
     prompt_1_notes TEXT,
@@ -128,5 +88,5 @@ CREATE TABLE grades (
     prompt_8_id INTEGER REFERENCES prompts (id),
     prompt_8_grade INTEGER NOT NULL,
     prompt_8_notes TEXT,
-    total_grade INTEGER NOT NULL
+    total_grade INTEGER
 );

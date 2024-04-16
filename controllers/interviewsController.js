@@ -1,36 +1,37 @@
 const express = require("express");
 const interviews = express.Router({ mergeParams: true });
 const {
-  getInterviewsByUserEmail,
+  getInterviewsByUserId,
   // getOneInterviewByUser,
   // createInterview,
-  getAllInterviews
+  getAllInterviews,
 } = require("../queries/interviews");
 
 // const { getOneUser } = require("../queries/users");
 
-interviews.post("/", async (req, res) => {
-  console.log(req.body)
-  const { email } = req.body;
-  console.log("$$$$$$$$$$$$$",email, "$$$$$$$$$$$$$$$$")
+
+
+interviews.get("/user/:userId", async (req, res) => {
+  const { userId } = req.params;
   try {
-    const interviewsByUser = await getInterviewsByUserEmail(email);
-    console.log(interviewsByUser)
-    res.json(interviewsByUser);
+    const events = await getInterviewsByUserId(userId);
+    res.json(events);
   } catch (error) {
-    console.log(error)
-    res.json(error);
+    console.log('Error getting events for user:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
+
+
 interviews.get("/", async (req, res) => {
   try {
-    const interviews = await getAllInterviews()
-    res.json(interviews)
+    const interviews = await getAllInterviews();
+    res.json(interviews);
   } catch (error) {
-    res.json(error)
+    res.json(error);
   }
-})
+});
 
 // interviews.get("/:interviewId", async (req, res) => {
 //   const { userId, interviewId } = req.params;
