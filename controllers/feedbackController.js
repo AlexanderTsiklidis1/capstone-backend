@@ -4,9 +4,11 @@ const feedback = express.Router({ mergeParams: true });
 const { getGradesByInterviewee, addGrade } = require("../queries/feedback");
 
 feedback.get("/", async (req, res) => {
-    const { interviewee } = req.body;
+    console.log(req.body)
+    const interviewee_name = req.body.interviewee_name;
+    console.log(interviewee_name, "$$$$$$$$$$$$$$$$")
     try {
-        const feedbackByUser = await getGradesByInterviewee(interviewee);
+        const feedbackByUser = await getGradesByInterviewee(interviewee_name);
         console.log(feedbackByUser)
         res.json(feedbackByUser)
     } catch (error) {

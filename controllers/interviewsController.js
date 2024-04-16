@@ -26,6 +26,7 @@ interviews.post("/", async (req, res) => {
 interviews.get("/", async (req, res) => {
   try {
     const interviews = await getAllInterviews()
+    console.log("this is interviews$$$$$$$$$")
     res.json(interviews)
   } catch (error) {
     res.json(error)
