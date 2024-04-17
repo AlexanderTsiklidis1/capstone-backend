@@ -11,10 +11,10 @@ const {
 
 interviews.post("/", async (req, res) => {
   console.log(req.body)
-  const { email } = req.body;
-  console.log("$$$$$$$$$$$$$",email, "$$$$$$$$$$$$$$$$")
+  const { invitee_email } = req.body;
+  console.log("$$$$$$$$$$$$$",invitee_email, "$$$$$$$$$$$$$$$$")
   try {
-    const interviewsByUser = await getInterviewsByUserEmail(email);
+    const interviewsByUser = await getInterviewsByUserEmail(invitee_email);
     console.log(interviewsByUser)
     res.json(interviewsByUser);
   } catch (error) {
