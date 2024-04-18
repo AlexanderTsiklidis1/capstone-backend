@@ -11,10 +11,10 @@ const {
 
 interviews.post("/", async (req, res) => {
   console.log(req.body)
-  const { invitee_email } = req.body;
-  console.log("$$$$$$$$$$$$$",invitee_email, "$$$$$$$$$$$$$$$$")
+  const { email } = req.body;
+  console.log("$$$$$$$$$$$$$",email, "$$$$$$$$$$$$$$$$")
   try {
-    const interviewsByUser = await getInterviewsByUserEmail(invitee_email);
+    const interviewsByUser = await getInterviewsByUserEmail(email);
     console.log(interviewsByUser)
     res.json(interviewsByUser);
   } catch (error) {
@@ -26,7 +26,7 @@ interviews.post("/", async (req, res) => {
 interviews.get("/", async (req, res) => {
   try {
     const interviews = await getAllInterviews()
-    console.log("this is interviews$$$$$$$$$")
+    console
     res.json(interviews)
   } catch (error) {
     res.json(error)
