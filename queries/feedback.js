@@ -1,5 +1,19 @@
 const db = require("../db/dbConfig");
 
+const getFeedbackById = async (id) => {
+  try {
+    const feedbackDetails = await db.one(
+      "SELECT * FROM grades WHERE id = $1",
+      id
+    );
+    console.log('Feedback Details:', feedbackDetails);
+    return feedbackDetails;
+  } catch (error) {
+    console.error('Error fetching feedback details:', error);
+    throw error;
+  }
+};
+
 const getGradesByInterviewee = async (user) => {
   try {
     console.log('Interviewee:', user);
@@ -86,6 +100,7 @@ const addGrade = async (gradeData) => {
 };
 
 module.exports = {
+  getFeedbackById,
   getGradesByInterviewee,
   addGrade
 };
