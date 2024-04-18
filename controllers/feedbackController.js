@@ -28,26 +28,19 @@ feedback.get('/prompts', async (req, res) => {
   });
   
 
-feedback.post("/", async (req, res) => {
-    console.log(req.body)
-    const interviewee_name = req.body.interviewee_name;
-    console.log(interviewee_name, "$$$$$$$$$$$$$$$$")
+  feedback.post("/", async (req, res) => {
     try {
-        const feedbackByUser = await getGradesByInterviewee(interviewee_name);
-        console.log(feedbackByUser)
-        res.json(feedbackByUser)
-    } catch (error) {
-        res.json(error)
-    }
-});
-
-feedback.post("/", async (req, res) => {
-    try {
+        // Add the new grade
         const newGrade = await addGrade(req.body);
-        res.json(newGrade);
-        console.log(newGrade)
+        console.log('New Grade:', newGrade);
+
+        // Retrieve all grades for the interviewee to confirm addition
+        const feedbackByUser = await getGradesByInterviewee(req.body.interviewee_name);
+        console.log('Feedback for User:', feedbackByUser);
+        res.json(feedbackByUser);
     } catch (error) {
-        res.json(error);
+        console.error('Error in POST /feedback:', error);
+        res.status(500).json({ error: 'Failed to process feedback.' });
     }
 });
 
