@@ -11,6 +11,12 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE prompts (
+    id SERIAL PRIMARY KEY,
+    category TEXT NOT NULL,
+    prompt TEXT NOT NULL
+);
+
 CREATE TABLE events (
     id SERIAL PRIMARY KEY,
     meeting_id VARCHAR(255) NOT NULL,
@@ -19,88 +25,11 @@ CREATE TABLE events (
     invitee_name TEXT NOT NULL,
     inviter_email VARCHAR(255) NOT NULL,
     inviter_name TEXT NOT NULL,
-    start_time TIMESTAMP NOT NULL,
-);
-
-
-CREATE TABLE interview_grades (
-    id SERIAL PRIMARY KEY,
-    interviewee_id INTEGER REFERENCES users (id),
-    admin_id INTEGER REFERENCES users (id),
-    grade TEXT NOT NULL,
-    comment TEXT
-);
-
-CREATE TABLE interview_reviews (
-    id SERIAL PRIMARY KEY,
-    admin_id INTEGER REFERENCES users (id),
-    interviewee_id INTEGER REFERENCES users (id),
-    review TEXT NOT NULL
-);
-
-CREATE TABLE interviews (
-    id SERIAL PRIMARY KEY,
-    grade_id INTEGER REFERENCES interview_grades (id),
-    review_id INTEGER REFERENCES interview_reviews (id),
-    admin_id INTEGER REFERENCES users (id),
-    interviewee_id INTEGER REFERENCES users (id),
-    date DATE
-);
-
-CREATE TABLE notifications (
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users (id),
-    notification TEXT NOT NULL
-);
-
-CREATE TABLE badges (
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users (id),
-    badge_title TEXT NOT NULL,
-    badge_requirement TEXT NOT NULL
-);
-
-CREATE TABLE user_role (
-    user_id INTEGER REFERENCES users (id),
-    admin BOOLEAN,
-    interviewee BOOLEAN
-);
-
-CREATE TABLE prompts (
-    id SERIAL PRIMARY KEY,
-    category TEXT NOT NULL,
-    prompt TEXT NOT NULL
-);
-
-CREATE TABLE bookings (
-    user_id INTEGER REFERENCES users (id),
-    id SERIAL PRIMARY KEY,
-    admin_id INTEGER REFERENCES users (id),
-    date DATE,
-    admin_confirmed BOOLEAN,
-    video_meeting_id TEXT NOT NULL,
-    expiration_time INTEGER
-);
-
-CREATE TABLE available_times (
-    id SERIAL PRIMARY KEY,
-    admin_id INTEGER REFERENCES users (id),
-    start_time TIME,
-    end_time TIME,
-    date DATE
-);
-
-CREATE TABLE user_bookings (
-    user_id INTEGER REFERENCES users (id),
-    available_times_id INTEGER REFERENCES available_times (id),
-    bookings_id INTEGER REFERENCES bookings (id),
-    admin_id INTEGER REFERENCES users (id),
-    id SERIAL PRIMARY KEY
+    start_time TIMESTAMP NOT NULL
 );
 
 CREATE TABLE grades (
     id SERIAL PRIMARY KEY,
-    interview_id INTEGER REFERENCES interviews (id),
     interviewee_name TEXT NOT NULL,
     admin_name TEXT NOT NULL,
     prompt_1_id INTEGER REFERENCES prompts (id),
@@ -128,4 +57,75 @@ CREATE TABLE grades (
     prompt_8_grade INTEGER NOT NULL,
     prompt_8_notes TEXT,
     total_grade INTEGER
+);
+
+CREATE TABLE interview_grades (
+    id SERIAL PRIMARY KEY,
+    interviewee_id INTEGER REFERENCES users (id),
+    admin_id INTEGER REFERENCES users (id),
+    grade TEXT NOT NULL,
+    comment TEXT
+);
+
+CREATE TABLE interview_reviews (
+    id SERIAL PRIMARY KEY,
+    admin_id INTEGER REFERENCES users (id),
+    interviewee_id INTEGER REFERENCES users (id),
+    review TEXT NOT NULL
+);
+
+
+
+CREATE TABLE interviews (
+    id SERIAL PRIMARY KEY,
+    grade_id INTEGER REFERENCES interview_grades (id),
+    review_id INTEGER REFERENCES interview_reviews (id),
+    admin_id INTEGER REFERENCES users (id),
+    interviewee_id INTEGER REFERENCES users (id),
+    date DATE
+);
+CREATE TABLE badges (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users (id),
+    badge_title TEXT NOT NULL,
+    badge_requirement TEXT NOT NULL
+);
+
+CREATE TABLE user_role (
+    user_id INTEGER REFERENCES users (id),
+    admin BOOLEAN,
+    interviewee BOOLEAN
+);
+
+
+CREATE TABLE bookings (
+    user_id INTEGER REFERENCES users (id),
+    id SERIAL PRIMARY KEY,
+    admin_id INTEGER REFERENCES users (id),
+    date DATE,
+    admin_confirmed BOOLEAN,
+    video_meeting_id TEXT NOT NULL,
+    expiration_time INTEGER
+);
+
+CREATE TABLE available_times (
+    id SERIAL PRIMARY KEY,
+    admin_id INTEGER REFERENCES users (id),
+    start_time TIME,
+    end_time TIME,
+    date DATE
+);
+
+CREATE TABLE user_bookings (
+    user_id INTEGER REFERENCES users (id),
+    available_times_id INTEGER REFERENCES available_times (id),
+    bookings_id INTEGER REFERENCES bookings (id),
+    admin_id INTEGER REFERENCES users (id),
+    id SERIAL PRIMARY KEY
+);
+
+CREATE TABLE notifications (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users (id),
+    notification TEXT NOT NULL
 );
