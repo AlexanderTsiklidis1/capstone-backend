@@ -20,6 +20,7 @@ feedback.post("/", async (req, res) => {
     try {
         const newGrade = await addGrade(req.body);
         res.json(newGrade);
+        console.log(newGrade)
     } catch (error) {
         res.json(error);
     }
