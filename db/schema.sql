@@ -25,7 +25,8 @@ CREATE TABLE events (
     invitee_name TEXT NOT NULL,
     inviter_email VARCHAR(255) NOT NULL,
     inviter_name TEXT NOT NULL,
-    start_time TIMESTAMP NOT NULL
+    start_time TIMESTAMP NOT NULL,
+    meeting_link
 );
 
 CREATE TABLE grades (
