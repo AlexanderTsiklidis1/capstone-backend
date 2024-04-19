@@ -15,6 +15,8 @@ const getInterviewsByUserEmail = async (email) => {
 };
 
 
+
+
 const getAllInterviews = async () => {
   try {
     const interviews = await db.any("SELECT * FROM events");
