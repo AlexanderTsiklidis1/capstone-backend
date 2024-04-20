@@ -75,8 +75,6 @@ CREATE TABLE interview_reviews (
     review TEXT NOT NULL
 );
 
-
-
 CREATE TABLE interviews (
     id SERIAL PRIMARY KEY,
     grade_id INTEGER REFERENCES interview_grades (id),
